@@ -9,8 +9,8 @@ class HomeController < ApplicationController
         elsif  
               if params[:ticker]
                 begin
-                @stock_logo = StockQuote::Stock.logo(params[:ticker])
-                @stock = StockQuote::Stock.quote(params[:ticker])
+                  @stock_logo = StockQuote::Stock.logo(params[:ticker])
+                  @stock = StockQuote::Stock.quote(params[:ticker])
                 rescue StandardError
                   @error = "Hey! That Stock Symbol does not Exist. Please try again."
                 end
