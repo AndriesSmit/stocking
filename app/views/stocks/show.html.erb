@@ -1,13 +1,23 @@
+      
 
+      
+     
 
-<% @ticker = StockQuote::Stock.quote(@stock.ticker) %>
-      <% if !@ticker %>
+      <% begin %>
+        
+          <% @ticker_logo = StockQuote::Stock.logo(@stock.ticker) %>
+          <% @ticker = StockQuote::Stock.quote(@stock.ticker) %>
+           
+        
+      <% rescue StandardError %>
+          <% @ticker = nil %>
 
-        The ticker: <%= @stock.ticker %><br/> does not exist!
+      <% end %>
 
+        <% if @ticker %>
 
-      <% else %>
-
+          <img src="<%= @ticker_logo.url %>"><br/>
+          <br/>
           <strong><%= @ticker.company_name %></strong><br/>
           Ticker Symbol: <%= @ticker.symbol %><br/>
           Current Price: $<%= number_with_precision(@ticker.latest_price, :precision => 2, :delimiter => ',') %><br/>
@@ -19,9 +29,14 @@
 
           Market Cap: $<%= number_with_precision(@ticker.market_cap, :precision => 2, :delimiter => ',') %><br/>
           Sector: <%= @ticker.symbol %><br/>
-          
 
       <% end %>
+          
+
+       
+
+
+      
 
 
 <br/><br/>

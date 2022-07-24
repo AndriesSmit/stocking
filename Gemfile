@@ -8,7 +8,7 @@ gem 'ffi', '~> 1.15', '>= 1.15.5'
 gem 'stock_quote', '~> 3.0'
 gem "rails", "~> 7.0.3", ">= 7.0.3.1"
 gem "sprockets-rails"
-gem "sqlite3", "~> 1.4"
+
 gem "puma", "~> 5.0"
 gem "importmap-rails"
 gem "turbo-rails"
@@ -17,7 +17,17 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
+group :production do 
+
+gem 'pg', '~> 1.4', '>= 1.4.1'
+  
+end
+
+
 group :development, :test do
+
+ gem "sqlite3", "~> 1.4"
+
  gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
 
