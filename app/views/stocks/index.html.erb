@@ -16,39 +16,42 @@
 
             <% @stocks.each do |stock| %>
                   <% if stock.user_id == current_user.id %>
-            
-                        <% @ticker = StockQuote::Stock.quote(stock.ticker) %>
-                        <% @api = StockQuote::Stock.new(api_key: 'pk_51ca322c84af4737b6f81261e456a66d') %>
-                        <% @ticker_logo = StockQuote::Stock.logo(stock.ticker) %>
-                              
-                                    <% if !@ticker %>
-                                    <tr>
-                                          <td><%= link_to "Error", stock %></td>
-                                          <td><%= stock.ticker %></td>
-                                          <td>N/A</td>
-                                          <td>N/A</td>
-                                          <td><center><%= link_to "Edit ", edit_stock_path(stock) %></center></td>
-                                          <td><center><%= link_to "Delete ", stock, method: :deleted, data: { confirm: 'Are you sure?'} %></center></td>
+                        <% begin %>
+                              <% @ticker = StockQuote::Stock.quote(stock.ticker) %>
+                              <% @api = StockQuote::Stock.new(api_key: 'pk_51ca322c84af4737b6f81261e456a66d') %>
+                              <% @ticker_logo = StockQuote::Stock.logo(stock.ticker) %>
+                        
+                        <% rescue StandardError %>
+                        <tr>
+                              <td><%= link_to "Error", stock %></td>
+                              <td><%= stock.ticker %></td>
+                              <td>N/A</td>
+                              <td>N/A</td>
+                              <td><center><%= link_to "Edit ", edit_stock_path(stock) %></center></td>
+                              <td><center><%= link_to "Delete ", stock, method: :deleted, data: { confirm: 'Are you sure?'} %></center></td>
 
-                                    </tr> 
-                                    <% else %>
-                                    <tr>
-                                          <td><%= link_to @ticker.company_name, stock %></td>
-                                          <td><%= @ticker.symbol %></td>
-                                          <td>$<%= number_with_precision(@ticker.latest_price, :precision => 2, :delimiter => ',') %></td>
-                                          <td>$<%= number_with_precision(@ticker.market_cap, :precision => 2, :delimiter => ',') %></td>
-                                          <td><center><%= link_to "Edit ", edit_stock_path(stock) %></center></td>
-                                          <td><center><%= link_to "Delete ", stock, method: :deleted, data: { confirm: 'Are you sure?'} %></center></td>
+                        </tr> 
+                        <% next %>
+                        <% end %>
 
-                                    </tr> 
 
-                                    <% end %>
+                        <tr>
+                              <td><%= link_to @ticker.company_name, stock %></td>
+                              <td><%= @ticker.symbol %></td>
+                              <td>$<%= number_with_precision(@ticker.latest_price, :precision => 2, :delimiter => ',') %></td>
+                              <td>$<%= number_with_precision(@ticker.market_cap, :precision => 2, :delimiter => ',') %></td>
+                              <td><center><%= link_to "Edit ", edit_stock_path(stock) %></center></td>
+                              <td><center><%= link_to "Delete ", stock, method: :deleted, data: { confirm: 'Are you sure?'} %></center></td>
+
+                        </tr> 
+
+                                    
  
                   <% end %>
                   
           <% end %>
             
-      </tbody>                  
+      </tbody>     
 
 </table>
 

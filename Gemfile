@@ -18,22 +18,16 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 group :production do 
-
-gem 'pg', '~> 1.4', '>= 1.4.1'
-  
+  gem 'pg', '~> 1.4', '>= 1.4.1'
 end
 
-
 group :development, :test do
-
- gem "sqlite3", "~> 1.4"
-
- gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "sqlite3", "~> 1.4"
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
 
 group :development do
   gem "web-console"
-
 end
 
 group :test do
